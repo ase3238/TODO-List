@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}To-Do List{% endblock %}
+{% block head %}
+{% if object.done %}
+{{ object.title }} - Done
+{% else %}
+{{ object.title }}
+{% endif %}
+{% endblock %}
+
+{% block contents %}
+	{% if object.priority == 0 %}
+		No priority.
+	{% else %}
+		{% for object.priority %}&#9733;{% endfor %}
+	{% endif %}
+	<li>Due: {{ object.due }}</li>
+	<p>{{ object.description }}</p>
+{% endblock %}
+
