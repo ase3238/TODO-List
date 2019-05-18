@@ -1,9 +1,11 @@
+from django.urls import reverse_lazy, reverse
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from todolist.models import Todo
+from .models import Todo
+from .forms import TodoForm
 
 # Create your views here.
 
@@ -18,18 +20,17 @@ class TodoDV(DetailView):
 	template_name = 'todolist/detail.html'
 	
 class TodoCreV(CreateView):
-	model = Todo
-	fields = ['title', 'description', 'priority', 'due']
+	form_class = TodoForm
 	template_name = 'todolist/create_form.html'
 
 class TodoUpdV(UpdateView):
 	model = Todo
-	fields = ['title', 'description', 'priority', 'due']
+	form_class = TodoForm
 	template_name = 'todolist/edit_form.html'
 
 class TodoDelV(DeleteView):
 	model = Todo
-	success_url = reverse_lazy('todo_index')
+	success_url = reverse_lazy('todo:todo_index')
 	template_name = 'todolist/delete_form.html'
 
 def done(request, todo_id):

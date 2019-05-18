@@ -1,21 +1,36 @@
 {% extends "base.html" %}
 
 {% block title %}To-Do List{% endblock %}
-{% block head %}
-{% if object.done %}
-{{ object.title }} - Done
-{% else %}
-{{ object.title }}
-{% endif %}
-{% endblock %}
 
-{% block contents %}
-	{% if object.priority == 0 %}
-		No priority.
+{% block content %}
+	<h1 class="mt-2">
+	<a href="{% url 'todo:todo_index' %}" class="btn btn-link" style="font-size:100%">&#8678;</a>
+	{% if object.done %}
+		{{ object.title }} - Done
 	{% else %}
-		{% for object.priority %}&#9733;{% endfor %}
+		{{ object.title }}
 	{% endif %}
+	</h1>
+	<hr class="mt-0 mb-4">
+	<li>Priority:
+	{% if object.priority == 0 %}No priority.
+	{% elif object.priority == 1 %}&#9733;
+	{% elif object.priority == 2 %}&#9733;&#9733;
+	{% elif object.priority == 3 %}&#9733;&#9733;&#9733;
+	{% endif %}
+	</li>
 	<li>Due: {{ object.due }}</li>
-	<p>{{ object.description }}</p>
+	<hr class="mt-4 mb-4">
+	{% if object.done %}
+	<a href="{% url 'todo:todo_done' object.id %}" class="btn btn-outline-primary" >Undo</a>
+	{% else %}
+	<a href="{% url 'todo:todo_done' object.id %}" class="btn btn-primary" >Done</a>
+	{% endif %}
+	<a href="{% url 'todo:todo_edit' object.id %}" class="btn btn-secondary" >Edit</a>
+	<a href="{% url 'todo:todo_delete' object.id %}" class="btn btn-danger" >Delete</a>
+	<hr class="mt-4 mb-4">
+	<div class="border border-primary w-auto p-3 rounded" style="background-color: #eee;">
+	{{ object.description }}
+	</div>
 {% endblock %}
 

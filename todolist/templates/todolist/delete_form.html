@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Delete To-Do{% endblock %}
+
+{% block content %}
+	<h1 class="mt-2">Delete To-Do</h1>
+	<hr class="mt-0 mb-4">
+	<form method="post" novalidate>
+		{% csrf_token %}
+		<p>Are you sure you want to delete "{{ object }}"?</p>
+		<input type="submit" class="btn btn-success" value="Yes">
+	</form>
+{% endblock %}
+

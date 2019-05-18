@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Create To-Do{% endblock %}
+
+{% block content %}
+	<h1 class="mt-2">
+	<a href="{% url 'todo:todo_index' %}" class="btn btn-link" style="font-size:100%">&#8678;</a>
+	Create To-Do
+	</h1>
+	<hr class="mt-0 mb-4">
+	<form method="post">
+		{% csrf_token %}
+		{{ form.title|as_crispy_field }}
+		{{ form.description|as_crispy_field }}
+		{{ form.priority|as_crispy_field }}
+		{{ form.due|as_crispy_field }}
+		<input type="submit" class="btn btn-primary" value="Add">
+	</form>
+<script type="text/javascript">
+	$(function () {
+		$('.datetimepicker1').datetimepicker();
+	});
+</script>
+{% endblock %}
+

@@ -1,13 +1,14 @@
-from django.conf.urls import url
-from todolist import views
+from django.urls import path
+from . import views
 
+app_name = 'todo'
 urlpatterns = [
-	url(r'^$', views.TodoLV.as_view(), name='todo_index'),
-	url(r'^[0-9]*/$'), views.TodoDV.as_view(), name='todo_detail'),
+	path('', views.TodoLV.as_view(), name='todo_index'),
+	path('<int:pk>/', views.TodoDV.as_view(), name='todo_detail'),
 
-	url(r'^form/$'), views.TodoCreV.as_view(), name='todo_form'),
-	url(r'^[0-9]*/edit/$'), views.TodoUpdV.as_view(), name='todo_edit'),
-	url(r'^[0-9]*/delete/$'), views.TodoDelV.as_view(), name='todo_delete'),
+	path('form/', views.TodoCreV.as_view(), name='todo_create'),
+	path('<int:pk>/edit/', views.TodoUpdV.as_view(), name='todo_edit'),
+	path('<int:pk>/delete/', views.TodoDelV.as_view(), name='todo_delete'),
 	
-	url(r'^done/$'), views.done, name='todo_done'),
+	path('<int:todo_id>/done/', views.done, name='todo_done'),
 ]
