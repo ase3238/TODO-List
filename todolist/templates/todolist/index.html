@@ -1,30 +1,60 @@
 {% extends "base.html" %}
+{% load tz %}
 
 {% block title %}To-Do List{% endblock %}
 		
 {% block content %}
+	{# title #}
 	<h1 class="mt-2">To-Do List</h1>
 	<hr class="mt-0 mb-4">
+
+	{# add button #}
 	<a href="{% url 'todo:todo_create' %}" class="btn btn-secondary" >Add To-Do</a>
 	<hr class="mt-4 mb-4">
-	<ul>
+
+	{# alert part #}
+	{% for todo in object_list %}
+		{% if todo.due|timesince|first != "0" and not todo.done %}
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			<a href="{% url 'todo:todo_detail' todo.id %}">{{ todo.title }}</a>'s deadline is over.
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		{% endif %}
+	{% endfor %}
+	
+	{# list part #}
+	<div class="list-group">
 		{% for todo in object_list %}
-			<li>
+			<a href="{% url 'todo:todo_detail' todo.id%}" class="list-group-item list-group-item-action 
 				{% if todo.done %}
-				<del>
+					 disabled" aria-disabled="false">
+					<del>
+				{% else %}
+					">
 				{% endif %}
-				<a href="{% url 'todo:todo_detail' todo.id%}">{{ todo.title }}
-				{% if todo.priority == 1 %}(&#9733;)
-				{% elif todo.priority == 2 %}(&#9733;&#9733;)
-				{% elif todo.priority == 3 %}(&#9733;&#9733;&#9733;)
-				{% endif %}</a>
+				<div class="d-flex w-100 justify-content-between">
+					<h5 class="mb-1">{{ todo.title }}</h5>
+					{% if todo.due|timesince|first == "0" %}
+						<small>{{ todo.due|timeuntil }} 남음</small>
+					{% else %}
+						<small>{{ todo.due|timesince }} 지남</small>
+					{% endif%}
+				</div>
+				<small>
+					{% if todo.priority == 1 %}(&#9733;)
+					{% elif todo.priority == 2 %}(&#9733;&#9733;)
+					{% elif todo.priority == 3 %}(&#9733;&#9733;&#9733;)
+					{% endif %}
+				</small>
 				{% if todo.done %}
-				</del>
+					</del>
 				{% endif %}
-			</li>
+			</a>
 		{% empty %}
-			<li>Nothing To-Do. Please Add To-Do.</li>
+			<a class="list-group-item" disabled >Nothing To-Do. Please Add To-Do.</a>
 		{% endfor %}
-	</ul>
+	</div>
 {% endblock %}
 

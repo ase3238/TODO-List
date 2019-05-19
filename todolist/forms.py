@@ -19,8 +19,8 @@ class TodoForm(forms.ModelForm):
 		super(TodoForm, self).__init__(*args, **kwargs)
 		self.fields['priority'] = forms.ChoiceField(choices=PRIORITY_CHOICES, widget=forms.RadioSelect)	
 		self.fields['due'].widget = DateTimePicker(
-				options={
-					'collapse': False,
-					'icon_toggle': False,
-				},
+					options={
+						'collapse': False,
+						'icon_toggle': False,
+					},
 				)
