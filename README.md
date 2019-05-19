@@ -10,7 +10,13 @@ git clone "https://github.com/ase3238/TODO-List/"
 설치는 django 공식 사이트를 따라주시면 됩니다.
 > https://docs.djangoproject.com/ko/2.2/intro/install/
 
-2-2. 서버를 실행합니다.
+2-2. 이 프로젝트는 2개의 외부 api를 사용합니다. 이들을 설치해줍니다. (bootsrtap, datetime widget)
+```Shell
+pip install django-crispy-forms
+pip install django-tempus-dominus
+```
+
+2-3. 서버를 실행합니다.
 ```Shell
 python3 manage.py runserver
 ```
