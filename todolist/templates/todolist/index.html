@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% load tz %}
 
 {% block title %}To-Do List{% endblock %}
-		
+
 {% block content %}
 	{# title #}
 	<h1 class="mt-2">To-Do List</h1>
@@ -16,24 +15,23 @@
 	{% for todo in object_list %}
 		{% if todo.due|timesince|first != "0" and not todo.done %}
 		<div class="alert alert-danger alert-dismissible fade show" role="alert">
-			<a href="{% url 'todo:todo_detail' todo.id %}">{{ todo.title }}</a>'s deadline is over.
+			<a href="{% url 'todo:todo_detail' todo.id %}" class="alert-link">{{ todo.title }}</a>'s deadline is over.
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
+				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		{% endif %}
 	{% endfor %}
-	
+
 	{# list part #}
 	<div class="list-group">
 		{% for todo in object_list %}
-			<a href="{% url 'todo:todo_detail' todo.id%}" class="list-group-item list-group-item-action 
-				{% if todo.done %}
-					 disabled" aria-disabled="false">
+			{% if todo.done %}
+				<a href="{% url 'todo:todo_detail' todo.id%}" class="list-group-item list-group-item-action disabled" aria-disabled="false">
 					<del>
-				{% else %}
-					">
-				{% endif %}
+			{% else %}
+				<a href="{% url 'todo:todo_detail' todo.id%}" class="list-group-item list-group-item-action ">
+			{% endif %}
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">{{ todo.title }}</h5>
 					{% if todo.due|timesince|first == "0" %}
@@ -51,10 +49,10 @@
 				{% if todo.done %}
 					</del>
 				{% endif %}
-			</a>
+				</a>
 		{% empty %}
 			<a class="list-group-item" disabled >Nothing To-Do. Please Add To-Do.</a>
 		{% endfor %}
 	</div>
+  </body>
 {% endblock %}
-
