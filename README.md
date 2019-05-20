@@ -16,7 +16,22 @@ pip install django-crispy-forms
 pip install django-tempus-dominus
 ```
 
-2-3. 서버를 실행합니다.
+2-3. 데이터베이스 설정을 위한 migration 명령을 실행합니다.
 ```Shell
-python3 manage.py runserver
+python3 manage.py makemigrations
+python3 maname.py mirate
+```
+
+2-4. settings.py에서 Allowed Host를 추가하여줍니다.
+```python
+ALLOWED_HOSTS = [
+        ...
+        '<YOUR_HOST>',
+        ...
+]
+```
+
+2-5. 서버를 실행합니다.
+```Shell
+python3 manage.py runserver 0.0.0.0:8000
 ```
