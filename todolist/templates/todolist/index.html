@@ -34,7 +34,9 @@
 			{% endif %}
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1">{{ todo.title }}</h5>
-					{% if todo.due|timesince|first == "0" %}
+					{% if todo.due == Null %}
+						<small>기한 없음</small>
+					{% elif todo.due|timesince|first == "0" %}
 						<small>{{ todo.due|timeuntil }} 남음</small>
 					{% else %}
 						<small>{{ todo.due|timesince }} 지남</small>
