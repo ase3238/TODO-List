@@ -13,7 +13,7 @@
 
 	{# alert part #}
 	{% for todo in object_list %}
-		{% if todo.due|timesince|first != "0" and not todo.done %}
+		{% if todo.due != Null and todo.due|timesince|first != "0" and not todo.done %}
 		<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			<a href="{% url 'todo:todo_detail' todo.id %}" class="alert-link">{{ todo.title }}</a>'s deadline is over.
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
